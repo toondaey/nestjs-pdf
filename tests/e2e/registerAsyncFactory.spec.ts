@@ -7,12 +7,12 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
 
-describe('register()', () => {
+describe('registerAsync() => useFactory', () => {
     let app: INestApplication;
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
-            imports: [AppModule.withRegisterAsync()],
+            imports: [AppModule.withUseFactoryRegisterAsync()],
         }).compile();
 
         app = module.createNestApplication();

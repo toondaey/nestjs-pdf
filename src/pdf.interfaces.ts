@@ -69,6 +69,7 @@ export interface PDFModuleAsyncOptions {
     useClass?: Type<PDFOptionsFactory>;
     useExisting?: Type<PDFOptionsFactory>;
     useFactory?: (...args: any[]) => PDFModuleOptions;
+    inject?: Array<string | symbol | Function | Type<any> | Abstract<any>>;
     imports?: Array<
         Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference
     >;

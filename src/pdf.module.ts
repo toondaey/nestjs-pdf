@@ -55,6 +55,7 @@ export class PDFModule {
             return {
                 provide: getHtmlPdfOptionsToken(options.name),
                 useFactory: options.useFactory,
+                inject: options.inject || [],
             };
         }
 

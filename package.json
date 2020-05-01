@@ -11,6 +11,7 @@
     "prepublish:next": "npm run build",
     "publish:next": "npm publish --access public --tag next",
     "test:integration": "jest --config ./tests/jest-e2e.json --runInBand",
+    "test:cov": "jest --config ./tests/jest-e2e.json --runInBand --coverage",
     "prerelease": "npm run build",
     "release": "release-it"
   },
@@ -39,6 +40,7 @@
     "@types/node": "13.9.4",
     "@types/pify": "3.0.2",
     "@types/rimraf": "3.0.0",
+    "coveralls": "3.1.0",
     "husky": "4.2.3",
     "jest": "25.5.2",
     "lint-staged": "10.2.1",
