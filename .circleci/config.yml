@@ -62,7 +62,8 @@ jobs:
       - run:
           name: Test coverage
           command: npm run test:cov
-      - coveralls/upload
+      - coveralls/upload:
+          path_to_lcov: './coverage/lcov.info'
 
 workflows:
   version: 2
