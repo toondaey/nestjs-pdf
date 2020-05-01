@@ -1,32 +1,11 @@
-import { Options as JuiceOptions } from "juice";
-import { CreateOptions, FileInfo } from "html-pdf";
-import { Type, Abstract, DynamicModule, ForwardReference } from "@nestjs/common";
-
-type ViewEngineOptions = Record<string, any>;
-
-export interface PDFModuleOptions {
-    name?: string;
-    view: ViewOptions;
-    juice?: JuiceOptions;
-}
-
-export interface PDFOptionsFactory {
-    createPdfOptions(): PDFModuleOptions
-}
-
-export interface PDFModuleAsyncOptions {
-    name?: string;
-    useClass?: Type<PDFOptionsFactory>;
-    useExisting?: Type<PDFOptionsFactory>;
-    useFactory?: (...args: any[]) => PDFModuleOptions;
-    provide: string | symbol | Type<any> | Abstract<any> | Function;
-    imports?: Array<Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference>;
-}
-
-export {
-    ViewEngineOptions,
-    JuiceOptions,
-};
+import { Options as JuiceOptions } from 'juice';
+import { CreateOptions, FileInfo } from 'html-pdf';
+import {
+    Type,
+    Abstract,
+    DynamicModule,
+    ForwardReference,
+} from '@nestjs/common';
 
 export type engine =
     | 'arc-templates'
@@ -73,27 +52,51 @@ export type engine =
     | 'walrus'
     | 'whiskers';
 
+type ViewEngineOptions = Record<string, any>;
+
+export interface PDFModuleOptions {
+    name?: string;
+    view: ViewOptions;
+    juice?: JuiceOptions;
+}
+
+export interface PDFOptionsFactory {
+    createPdfOptions(): PDFModuleOptions;
+}
+
+export interface PDFModuleAsyncOptions {
+    name?: string;
+    useClass?: Type<PDFOptionsFactory>;
+    useExisting?: Type<PDFOptionsFactory>;
+    useFactory?: (...args: any[]) => PDFModuleOptions;
+    imports?: Array<
+        Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference
+    >;
+}
+
 export interface ViewOptions {
-    root: string,
-    engine: engine,
-    extension?: string,
-    engineOptions?: ViewEngineOptions,
+    root: string;
+    engine: engine;
+    extension?: string;
+    engineOptions?: ViewEngineOptions;
 }
 
 export interface ViewPortSize {
-    width?: number,
-    height?: number
-};
+    width?: number;
+    height?: number;
+}
 
 export interface PdfOptions extends CreateOptions {
-    filename: string;
+    filename?: string;
     template: string;
     viewportSize?: ViewPortSize;
     locals?: {
-        [key: string]: any
+        [key: string]: any;
     };
 }
 
 export interface PDF {
-    (options: PdfOptions): FileInfo
+    (options: PdfOptions): FileInfo;
 }
+
+export { ViewEngineOptions, JuiceOptions };

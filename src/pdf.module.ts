@@ -1,14 +1,11 @@
-import {
-    createPdfProvider,
-    createPdfOptionsProvider,
-} from "./pdf.provider";
+import { createPdfProvider, createPdfOptionsProvider } from './pdf.provider';
 import {
     PDFModuleOptions,
     PDFOptionsFactory,
     PDFModuleAsyncOptions,
-} from "./pdf.interfaces";
-import { getPdfToken, getHtmlPdfOptionsToken } from "./utils";
-import { Module, DynamicModule, Provider, Type } from "@nestjs/common";
+} from './pdf.interfaces';
+import { getPdfToken, getHtmlPdfOptionsToken } from './utils';
+import { Module, DynamicModule, Provider, Type } from '@nestjs/common';
 
 @Module({})
 export class PDFModule {
@@ -19,13 +16,12 @@ export class PDFModule {
             module: PDFModule,
             providers: [
                 createPdfOptionsProvider(otherOptions, name),
-                createPdfProvider(name)
+                createPdfProvider(name),
             ],
-            exports: [getPdfToken(name)]
+            exports: [getPdfToken(name)],
         };
     }
 
-    /** @todo Build register async */
     static registerAsync(options: PDFModuleAsyncOptions): DynamicModule {
         return {
             module: PDFModule,
@@ -48,20 +44,24 @@ export class PDFModule {
             {
                 provide: useClass,
                 useClass,
-            }
+            },
         ];
     }
 
-    static createAsyncOptionsProvider(options: PDFModuleAsyncOptions): Provider {
+    static createAsyncOptionsProvider(
+        options: PDFModuleAsyncOptions,
+    ): Provider {
         if (options.useFactory) {
             return {
                 provide: getHtmlPdfOptionsToken(options.name),
-                useFactory: options.useFactory
+                useFactory: options.useFactory,
             };
         }
 
         const inject = [
-            (options.useClass || options.useExisting) as Type<PDFOptionsFactory>
+            (options.useClass || options.useExisting) as Type<
+                PDFOptionsFactory
+            >,
         ];
         return {
             provide: getHtmlPdfOptionsToken(options.name),

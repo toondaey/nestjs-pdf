@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-pdf",
+  "name": "@nestjs/pdf",
   "version": "1.0.0",
   "description": "PDF generator for nestjs framework.",
   "main": "index.js",
@@ -18,18 +18,20 @@
     "pdf",
     "nestjs",
     "html-pdf",
-    "nestjs/pdf"
+    "nestjs/pdf",
+    "@nestjs/pdf"
   ],
-  "author": "B'Tunde <tunde1990@gmail.com>",
+  "author": "B'Tunde",
+  "url": "https://github.com/toondaey/nestjs-pdf#readme",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
-    "@commitlint/config-angular": "8.3.4",
     "@commitlint/config-conventional": "8.3.4",
     "@commitlint/prompt-cli": "8.3.5",
     "@compodoc/compodoc": "1.1.11",
     "@nestjs/common": "7.0.9",
     "@nestjs/core": "7.0.9",
+    "@nestjs/platform-express": "7.0.9",
     "@nestjs/testing": "7.0.9",
     "@types/consolidate": "0.14.0",
     "@types/html-pdf": "2.2.0",
@@ -38,7 +40,13 @@
     "@types/pify": "3.0.2",
     "@types/rimraf": "3.0.0",
     "husky": "4.2.3",
+    "jest": "25.5.2",
+    "lint-staged": "10.2.1",
+    "prettier": "2.0.5",
+    "pug": "2.0.4",
+    "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
+    "rxjs": "6.5.5",
     "ts-jest": "25.1.0",
     "typescript": "3.8.3"
   },
@@ -48,5 +56,25 @@
     "html-pdf": "2.2.0",
     "juice": "6.0.0",
     "pify": "5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write"
+    ]
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.10.0 || ^7.0.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toondaey/nestjs-pdf"
   }
 }
