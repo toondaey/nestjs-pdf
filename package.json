@@ -15,6 +15,7 @@
     "prerelease": "npm run build",
     "release": "release-it"
   },
+  "types": "index.d.ts",
   "keywords": [
     "pdf",
     "nestjs",
@@ -40,7 +41,12 @@
     "@types/node": "13.9.4",
     "@types/pify": "3.0.2",
     "@types/rimraf": "3.0.0",
+    "@typescript-eslint/eslint-plugin": "2.30.0",
+    "@typescript-eslint/parser": "2.30.0",
     "coveralls": "3.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.20.2",
     "husky": "4.2.3",
     "jest": "25.5.2",
     "lint-staged": "10.2.1",
