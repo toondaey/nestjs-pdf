@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 orbs:
   coveralls: coveralls/coveralls@1.0.6
@@ -62,11 +62,10 @@ jobs:
       - run:
           name: Test coverage
           command: npm run test:cov
-      - coveralls/upload:
-          path_to_lcov: './coverage/lcov.info'
+      - coveralls/upload
 
 workflows:
-  version: 2
+  version: 2.1
   build-and-test:
     jobs:
       - build
