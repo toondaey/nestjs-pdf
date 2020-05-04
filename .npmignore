@@ -16,4 +16,3 @@ renovate.json
 .circleci
 coverage
 .env
-*.svg
