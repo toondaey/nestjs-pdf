@@ -1,21 +1,10 @@
 {
-  "name": "@nestjs/pdf",
-  "version": "1.0.0",
+  "name": "nestjs-pdf",
+  "version": "1.0.1",
   "description": "PDF generator for nestjs framework.",
   "main": "index.js",
-  "scripts": {
-    "build": "rimraf -rf dist && tsc -p tsconfig.json",
-    "lint": "eslint 'src/**/*.ts' --fix",
-    "prepublish:npm": "npm run build",
-    "publish:npm": "npm publish --access public",
-    "prepublish:next": "npm run build",
-    "publish:next": "npm publish --access public --tag next",
-    "test:integration": "jest --config ./tests/jest-e2e.json --runInBand",
-    "test:cov": "jest --config ./tests/jest-e2e.json --runInBand --coverage",
-    "prerelease": "npm run build",
-    "release": "release-it"
-  },
   "types": "index.d.ts",
+  "author": "B'Tunde Aromire",
   "keywords": [
     "pdf",
     "nestjs",
@@ -23,9 +12,29 @@
     "nestjs/pdf",
     "@nestjs/pdf"
   ],
-  "author": "B'Tunde",
-  "url": "https://github.com/toondaey/nestjs-pdf#readme",
-  "license": "MIT",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "rimraf -rf dist && tsc -p tsconfig.json",
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public",
+    "prepublish:next": "npm run build",
+    "publish:next": "npm publish --access public --tag next",
+    "test": "npm run test:integration",
+    "test:integration": "jest --config ./tests/jest-e2e.json --runInBand",
+    "test:cov": "jest --config ./tests/jest-e2e.json --runInBand --coverage",
+    "prerelease": "npm run build",
+    "release": "release-it"
+  },
+  "dependencies": {
+    "consolidate": "0.15.1",
+    "html-pdf": "2.2.0",
+    "juice": "6.0.0",
+    "lodash.merge": "4.6.2",
+    "pify": "5.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
@@ -38,6 +47,7 @@
     "@types/consolidate": "0.14.0",
     "@types/html-pdf": "2.2.0",
     "@types/jest": "25.1.1",
+    "@types/lodash.merge": "4.6.6",
     "@types/node": "13.9.4",
     "@types/pify": "3.0.2",
     "@types/rimraf": "3.0.0",
@@ -53,21 +63,23 @@
     "prettier": "2.0.5",
     "pug": "2.0.4",
     "reflect-metadata": "0.1.13",
+    "release-it": "13.5.7",
     "rimraf": "3.0.2",
     "rxjs": "6.5.5",
     "ts-jest": "25.1.0",
     "typescript": "3.8.3"
   },
-  "dependencies": {
-    "bluebird": "3.7.2",
-    "consolidate": "0.15.1",
-    "html-pdf": "2.2.0",
-    "juice": "6.0.0",
-    "pify": "5.0.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toondaey/nestjs-pdf.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toondaey/nestjs-pdf/issues"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
+      "commit-msg": "commitlint -c commitlintrc.config.js -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
@@ -81,8 +93,5 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/toondaey/nestjs-pdf"
-  }
+  "homepage": "https://github.com/toondaey/nestjs-pdf#readme"
 }
