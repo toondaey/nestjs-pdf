@@ -17,4 +17,4 @@ npm-debug.log
 
 # dist
 dist
-tests/**/*.pdf
+.env

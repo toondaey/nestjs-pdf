@@ -14,3 +14,6 @@ renovate.json
 
 # ci
 .circleci
+coverage
+.env
+*.svg

@@ -1,11 +1,11 @@
-import { Options as JuiceOptions } from 'juice';
-import { CreateOptions, FileInfo } from 'html-pdf';
 import {
     Type,
     Abstract,
     DynamicModule,
     ForwardReference,
 } from '@nestjs/common';
+import { Options as JuiceOptions } from 'juice';
+import { CreateOptions, FileInfo } from 'html-pdf';
 
 export type engine =
     | 'arc-templates'
