@@ -6,8 +6,8 @@
 </p>
 
 <p style='text-align:center;'>
-A simple PDF generator module for <a href="https://nestjs.com">nestjs<a/> framework.
-<p/>
+A simple PDF generator module for <a href="https://nestjs.com">nestjs</a> framework.
+</p>
 
 <p align='center'>
     <a href="https://www.npmjs.com/package/nestjs-pdf" target='_blank'><img alt="npm" src="https://img.shields.io/npm/dm/nestjs-pdf" alt="NPM Downloads"></a>
@@ -15,7 +15,7 @@ A simple PDF generator module for <a href="https://nestjs.com">nestjs<a/> framew
     <a href="https://npmjs.com/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="npm version" src="https://img.shields.io/npm/v/nestjs-pdf"></a>
     <a href="https://npmjs.com/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="LICENCE" src="https://img.shields.io/npm/l/nestjs-pdf"></a>
     <a href="https://circleci.com/gh/toondaey/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="CircleCI build" src="https://img.shields.io/circleci/build/gh/toondaey/nestjs-pdf/master"></a>
-<p/>
+</p>
 
 <details>
 <summary><strong>Table of content</strong> (click to expand)</summary>
@@ -47,7 +47,7 @@ A basic usage example:
 `app.module.ts`
 ```ts
 import { Module } from '@nestjs/common';
-import { PDFModule } from '../../src/pdf.module';
+import { PDFModule } from 'nestjs-pdf';
 
 @Module({
     imports: [
@@ -94,7 +94,7 @@ export class AppModule { };
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { PDFOptionsFactory, PDFModuleOptions } from '../../src/pdf.interfaces';
+import { PDFOptionsFactory, PDFModuleOptions } from 'nestjs-pdf';
 
 @Injectable()
 export class PdfConfigService implements PDFOptionsFactory {
