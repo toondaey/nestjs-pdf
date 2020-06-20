@@ -30,6 +30,7 @@ export class PDFModule {
                 ...this.createAsyncProviders(options),
             ],
             imports: options.imports || [],
+            exports: [getPdfToken(options.name)],
         };
     }
 
