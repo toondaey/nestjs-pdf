@@ -1,6 +1,6 @@
 {
   "name": "nestjs-pdf",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "PDF generator for nestjs framework.",
   "main": "index.js",
   "types": "index.d.ts",
