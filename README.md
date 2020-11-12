@@ -10,7 +10,7 @@ A simple PDF generator module for <a href="https://nestjs.com">nestjs</a> framew
 </p>
 
 <p align='center'>
-    <a href="https://www.npmjs.com/package/nestjs-pdf" target='_blank'><img alt="npm" src="https://img.shields.io/npm/dm/nestjs-pdf" alt="NPM Downloads"></a>
+    <a href="https://www.npmjs.com/package/@t00nday/nestjs-pdf" target='_blank'><img alt="npm" src="https://img.shields.io/npm/dm/@t00nday/nestjs-pdf" alt="NPM Downloads"></a>
     <a href="https://coveralls.io/github/toondaey/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="Coveralls github" src="https://img.shields.io/coveralls/github/toondaey/nestjs-pdf"></a>
     <a href="https://npmjs.com/@t00nday/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="npm version" src="https://img.shields.io/npm/v/@t00nday/nestjs-pdf"></a>
     <a href="https://npmjs.com/@t00nday/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="LICENCE" src="https://img.shields.io/npm/l/@t00nday/nestjs-pdf"></a>
