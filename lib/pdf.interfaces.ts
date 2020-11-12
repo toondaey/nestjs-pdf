@@ -1,11 +1,9 @@
-import {
-    Type,
-    Abstract,
-    DynamicModule,
-    ForwardReference,
-} from '@nestjs/common';
+import { Readable } from 'stream';
+
+import { CreateOptions } from 'html-pdf';
 import { Options as JuiceOptions } from 'juice';
-import { CreateOptions, FileInfo } from 'html-pdf';
+import { Type, Abstract } from '@nestjs/common';
+import { ModuleMetadata } from '@nestjs/common/interfaces';
 
 export type engine =
     | 'arc-templates'
@@ -52,27 +50,27 @@ export type engine =
     | 'walrus'
     | 'whiskers';
 
-type ViewEngineOptions = Record<string, any>;
+type ViewEngineOptions = { cache: boolean; [options: string]: any };
 
 export interface PDFModuleOptions {
-    name?: string;
     view: ViewOptions;
     juice?: JuiceOptions;
+}
+
+export interface PDFRegisterOptions extends PDFModuleOptions {
+    name?: string;
 }
 
 export interface PDFOptionsFactory {
     createPdfOptions(): PDFModuleOptions;
 }
 
-export interface PDFModuleAsyncOptions {
+export interface PDFModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
     name?: string;
     useClass?: Type<PDFOptionsFactory>;
     useExisting?: Type<PDFOptionsFactory>;
     useFactory?: (...args: any[]) => PDFModuleOptions;
     inject?: Array<string | symbol | Function | Type<any> | Abstract<any>>;
-    imports?: Array<
-        Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference
-    >;
 }
 
 export interface ViewOptions {
@@ -87,17 +85,9 @@ export interface ViewPortSize {
     height?: number;
 }
 
-export interface PdfOptions extends CreateOptions {
-    filename?: string;
-    template: string;
+export interface PDFOptions extends CreateOptions {
     viewportSize?: ViewPortSize;
-    locals?: {
-        [key: string]: any;
-    };
-}
-
-export interface PDF {
-    (options: PdfOptions): FileInfo;
+    locals?: Record<string, any>;
 }
 
 export { ViewEngineOptions, JuiceOptions };

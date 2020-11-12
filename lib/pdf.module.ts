@@ -1,15 +1,17 @@
+import { Module, DynamicModule, Provider, Type } from '@nestjs/common';
+
 import { createPdfProvider, createPdfOptionsProvider } from './pdf.provider';
+
 import {
-    PDFModuleOptions,
     PDFOptionsFactory,
+    PDFRegisterOptions,
     PDFModuleAsyncOptions,
 } from './pdf.interfaces';
 import { getPdfToken, getHtmlPdfOptionsToken } from './utils';
-import { Module, DynamicModule, Provider, Type } from '@nestjs/common';
 
 @Module({})
 export class PDFModule {
-    static register(options: PDFModuleOptions): DynamicModule {
+    static register(options: PDFRegisterOptions): DynamicModule {
         const { name, ...otherOptions } = options;
 
         return {
@@ -52,9 +54,11 @@ export class PDFModule {
     static createAsyncOptionsProvider(
         options: PDFModuleAsyncOptions,
     ): Provider {
+        const provide = getHtmlPdfOptionsToken(options.name);
+
         if (options.useFactory) {
             return {
-                provide: getHtmlPdfOptionsToken(options.name),
+                provide,
                 useFactory: options.useFactory,
                 inject: options.inject || [],
             };
@@ -65,8 +69,9 @@ export class PDFModule {
                 PDFOptionsFactory
             >,
         ];
+
         return {
-            provide: getHtmlPdfOptionsToken(options.name),
+            provide,
             useFactory: (factory: PDFOptionsFactory) =>
                 factory.createPdfOptions(),
             inject,

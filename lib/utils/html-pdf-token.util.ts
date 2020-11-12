@@ -1,4 +1,3 @@
-
 export function getHtmlPdfOptionsToken(name?: string): string {
     return `PdfOptionsToken(${name ? name : 'default'})`;
 }

@@ -11,15 +11,9 @@
     "target": "es6",
     "sourceMap": false,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./lib",
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "tests"
-  ]
+  "include": ["lib/**/*.ts"],
+  "exclude": ["test"]
 }
