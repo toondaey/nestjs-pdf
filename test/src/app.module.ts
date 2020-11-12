@@ -12,12 +12,12 @@ const root = join(__dirname, '../assets/pdf');
     exports: [PDFModule],
 })
 export class AppModule {
-    static withRegister(name?: string): DynamicModule {
+    static withRegister(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.register({
-                    name,
+                    isGlobal: true,
                     view: {
                         root,
                         engine: 'pug',
@@ -27,12 +27,11 @@ export class AppModule {
         };
     }
 
-    static withUseFactoryRegisterAsync(name?: string): DynamicModule {
+    static withUseFactoryRegisterAsync(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.registerAsync({
-                    name,
                     useFactory: () => ({
                         view: {
                             root,
@@ -44,12 +43,11 @@ export class AppModule {
         };
     }
 
-    static withUseClassRegisterAsync(name?: string): DynamicModule {
+    static withUseClassRegisterAsync(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.registerAsync({
-                    name,
                     useClass: PDFConfigService,
                     imports: [],
                 }),
@@ -57,12 +55,11 @@ export class AppModule {
         };
     }
 
-    static withUseExistingRegisterAsync(name?: string): DynamicModule {
+    static withUseExistingRegisterAsync(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.registerAsync({
-                    name,
                     useExisting: PDFConfigService,
                     imports: [ExistingModule],
                 }),

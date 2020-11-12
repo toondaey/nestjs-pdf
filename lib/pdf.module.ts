@@ -1,42 +1,52 @@
-import { Module, DynamicModule, Provider, Type } from '@nestjs/common';
-
-import { createPdfProvider, createPdfOptionsProvider } from './pdf.provider';
+import {
+    Type,
+    Module,
+    Provider,
+    DynamicModule,
+} from '@nestjs/common';
 
 import {
     PDFOptionsFactory,
-    PDFRegisterOptions,
-    PDFModuleAsyncOptions,
+    PDFModuleRegisterOptions,
+    PDFModuleRegisterAsyncOptions,
 } from './pdf.interfaces';
-import { getPdfToken, getHtmlPdfOptionsToken } from './utils';
+import { PDFService } from './pdf.service';
+import { PDF_OPTIONS_TOKEN } from './pdf.constants';
 
-@Module({})
+@Module({
+    providers: [PDFService],
+    exports: [PDFService],
+})
 export class PDFModule {
-    static register(options: PDFRegisterOptions): DynamicModule {
-        const { name, ...otherOptions } = options;
-
+    static register(
+        options: PDFModuleRegisterOptions,
+    ): DynamicModule {
         return {
+            global: options.isGlobal,
             module: PDFModule,
             providers: [
-                createPdfOptionsProvider(otherOptions, name),
-                createPdfProvider(name),
+                {
+                    provide: PDF_OPTIONS_TOKEN,
+                    useValue: options,
+                },
             ],
-            exports: [getPdfToken(name)],
         };
     }
 
-    static registerAsync(options: PDFModuleAsyncOptions): DynamicModule {
+    static registerAsync(
+        options: PDFModuleRegisterAsyncOptions,
+    ): DynamicModule {
         return {
+            global: options.isGlobal,
             module: PDFModule,
-            providers: [
-                createPdfProvider(options.name),
-                ...this.createAsyncProviders(options),
-            ],
+            providers: [...this.createAsyncProviders(options)],
             imports: options.imports || [],
-            exports: [getPdfToken(options.name)],
         };
     }
 
-    static createAsyncProviders(options: PDFModuleAsyncOptions): Provider[] {
+    static createAsyncProviders(
+        options: PDFModuleRegisterAsyncOptions,
+    ): Provider[] {
         if (options.useFactory || options.useExisting) {
             return [this.createAsyncOptionsProvider(options)];
         }
@@ -52,13 +62,11 @@ export class PDFModule {
     }
 
     static createAsyncOptionsProvider(
-        options: PDFModuleAsyncOptions,
+        options: PDFModuleRegisterAsyncOptions,
     ): Provider {
-        const provide = getHtmlPdfOptionsToken(options.name);
-
         if (options.useFactory) {
             return {
-                provide,
+                provide: PDF_OPTIONS_TOKEN,
                 useFactory: options.useFactory,
                 inject: options.inject || [],
             };
@@ -71,7 +79,7 @@ export class PDFModule {
         ];
 
         return {
-            provide,
+            provide: PDF_OPTIONS_TOKEN,
             useFactory: (factory: PDFOptionsFactory) =>
                 factory.createPdfOptions(),
             inject,

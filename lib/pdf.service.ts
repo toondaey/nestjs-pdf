@@ -2,8 +2,7 @@ import { join } from 'path';
 import { Readable } from 'stream';
 
 import {
-    from,
-    scheduled,
+    of,
     Observable,
     SchedulerLike,
     asapScheduler,
@@ -15,13 +14,24 @@ import omit from 'lodash.omit';
 import merge from 'lodash.merge';
 import consolidate from 'consolidate';
 import { mergeMap } from 'rxjs/operators';
+import { Inject, Injectable } from '@nestjs/common';
 import pdf, { CreateResult, FileInfo } from 'html-pdf';
 
+import {
+    PDFOptions,
+    ViewOptions,
+    PDFModuleOptions,
+    PDF as PDFInterface,
+} from './pdf.interfaces';
+import { PDF_OPTIONS_TOKEN } from './pdf.constants';
 import { defaultCreateOptions } from './pdf.default';
-import { PDFOptions, ViewOptions, PDFModuleOptions } from './pdf.interfaces';
 
-export class PDF {
-    constructor(private readonly moduleOptions: PDFModuleOptions) {}
+@Injectable()
+export class PDFService implements PDFInterface {
+    constructor(
+        @Inject(PDF_OPTIONS_TOKEN)
+        private readonly moduleOptions: PDFModuleOptions,
+    ) {}
 
     toFile(
         template: string,
@@ -83,7 +93,10 @@ export class PDF {
         template: string,
         options?: PDFOptions,
     ): Observable<string> {
-        const path = this.getTemplatePath(template, this.moduleOptions.view);
+        const path = this.getTemplatePath(
+            template,
+            this.moduleOptions.view,
+        );
 
         return this.generateHtmlFromTemplate(
             path,
@@ -91,11 +104,7 @@ export class PDF {
             options?.locals,
         ).pipe(
             mergeMap((html: string) =>
-                scheduled(
-                    /** @todo figure out */
-                    Promise.resolve(this.prepareHtmlTemplate(html)),
-                    asapScheduler,
-                ),
+                of(this.prepareHtmlTemplate(html)),
             ),
         );
     }

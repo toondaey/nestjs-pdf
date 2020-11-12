@@ -5,8 +5,7 @@ import { Readable } from 'stream';
 import { FileInfo } from 'html-pdf';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { PDF } from '../../lib/pdf';
-import { getPdfToken } from '../../lib';
+import { PDFService } from '../../lib';
 import { rmFile } from '../utils/fs.utlis';
 import { AppModule } from '../src/app.module';
 import { AppService } from '../src/app.service';
@@ -17,7 +16,7 @@ describe('PDFModule', () => {
 
     describe('register()', () => {
         let filename: string;
-        let pdf: PDF;
+        let appService: AppService;
 
         beforeEach(async () => {
             module = await Test.createTestingModule({
@@ -25,30 +24,32 @@ describe('PDFModule', () => {
                 imports: [AppModule.withRegister()],
             }).compile();
 
-            pdf = module.get<PDF>(getPdfToken());
+            appService = module.get<AppService>(AppService);
         });
 
-        afterEach(() => rmFile(filename));
-
         it('should be defined', () => {
-            expect(module.get<PDF>(getPdfToken())).toBeDefined();
+            expect(module.get<PDFService>(PDFService)).toBeDefined();
         });
 
         it('should generate pdf file from template', complete => {
             filename = join(tmpdir(), 'test.pdf');
 
-            pdf.toFile('test', filename, {
-                locals: { name: 'Toonday' },
-            }).subscribe({
-                next(file: FileInfo) {
-                    expect(file.filename).toBe(filename);
-                },
-                complete,
-            });
+            appService
+                .generatePDFToFile('test', filename, {
+                    locals: { name: 'Toonday' },
+                })
+                .subscribe({
+                    next(file: FileInfo) {
+                        expect(file.filename).toBe(filename);
+                        // Tests that file was actually created.
+                        expect(() => rmFile(filename)).not.toThrowError();
+                    },
+                    complete,
+                });
         });
 
         it('should generate pdf stream from template', complete => {
-            pdf.toStream('test').subscribe({
+            appService.generatePDFToStream('test').subscribe({
                 next(stream: Readable) {
                     expect(stream instanceof Readable).toBe(true);
                 },
@@ -57,7 +58,7 @@ describe('PDFModule', () => {
         });
 
         it('should generate pdf buffer from template', complete => {
-            pdf.toBuffer('test').subscribe({
+            appService.generatePDFToBuffer('test').subscribe({
                 next(buffer: Buffer) {
                     expect(Buffer.isBuffer(buffer)).toBe(true);
                 },
@@ -75,7 +76,7 @@ describe('PDFModule', () => {
                     ],
                 }).compile();
 
-                expect(module.get<PDF>(getPdfToken(moduleName))).toBeDefined();
+                expect(module.get<PDFService>(PDFService)).toBeDefined();
             });
         });
 
@@ -85,7 +86,7 @@ describe('PDFModule', () => {
                     imports: [AppModule.withUseClassRegisterAsync(moduleName)],
                 }).compile();
 
-                expect(module.get<PDF>(getPdfToken(moduleName))).toBeDefined();
+                expect(module.get<PDFService>(PDFService)).toBeDefined();
             });
         });
 
@@ -97,7 +98,7 @@ describe('PDFModule', () => {
                     ],
                 }).compile();
 
-                expect(module.get<PDF>(getPdfToken(moduleName))).toBeDefined();
+                expect(module.get<PDFService>(PDFService)).toBeDefined();
             });
         });
     });
