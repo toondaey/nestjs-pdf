@@ -1,6 +1,6 @@
 # source
 lib
-tests
+test
 index.ts
 package-lock.json
 tslint.json
@@ -17,3 +17,8 @@ renovate.json
 coverage
 .env
 .vscode
+.editorconfig
+.release-it.json
+.eslintrc
+commitlint.config.js
+pdf-icon.svg

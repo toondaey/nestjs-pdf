@@ -97,5 +97,8 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0"
   },
-  "homepage": "https://github.com/toondaey/nestjs-pdf#readme"
+  "homepage": "https://github.com/toondaey/nestjs-pdf#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
