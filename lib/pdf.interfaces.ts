@@ -1,11 +1,10 @@
-import {
-    Type,
-    Abstract,
-    DynamicModule,
-    ForwardReference,
-} from '@nestjs/common';
-import { Options as JuiceOptions } from 'juice';
+import { Readable } from 'stream';
+
 import { CreateOptions, FileInfo } from 'html-pdf';
+import { Options as JuiceOptions } from 'juice';
+import { Type, Abstract } from '@nestjs/common';
+import { ModuleMetadata } from '@nestjs/common/interfaces';
+import { Observable, SchedulerLike } from 'rxjs';
 
 export type engine =
     | 'arc-templates'
@@ -52,26 +51,32 @@ export type engine =
     | 'walrus'
     | 'whiskers';
 
-type ViewEngineOptions = Record<string, any>;
+type ViewEngineOptions = {
+    cache: boolean;
+    [options: string]: any;
+};
 
 export interface PDFModuleOptions {
-    name?: string;
     view: ViewOptions;
     juice?: JuiceOptions;
+}
+
+export interface PDFModuleRegisterOptions extends PDFModuleOptions {
+    isGlobal?: boolean;
 }
 
 export interface PDFOptionsFactory {
     createPdfOptions(): PDFModuleOptions;
 }
 
-export interface PDFModuleAsyncOptions {
-    name?: string;
+export interface PDFModuleRegisterAsyncOptions
+    extends Pick<ModuleMetadata, 'imports'> {
+    isGlobal?: boolean;
     useClass?: Type<PDFOptionsFactory>;
     useExisting?: Type<PDFOptionsFactory>;
     useFactory?: (...args: any[]) => PDFModuleOptions;
-    inject?: Array<string | symbol | Function | Type<any> | Abstract<any>>;
-    imports?: Array<
-        Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference
+    inject?: Array<
+        string | symbol | Function | Type<any> | Abstract<any>
     >;
 }
 
@@ -87,17 +92,30 @@ export interface ViewPortSize {
     height?: number;
 }
 
-export interface PdfOptions extends CreateOptions {
-    filename?: string;
-    template: string;
+export interface PDFOptions extends CreateOptions {
     viewportSize?: ViewPortSize;
-    locals?: {
-        [key: string]: any;
-    };
+    locals?: Record<string, any>;
 }
 
 export interface PDF {
-    (options: PdfOptions): FileInfo;
+    toFile(
+        template: string,
+        filename?: string,
+        options?: PDFOptions,
+        scheduler?: SchedulerLike,
+    ): Observable<FileInfo>;
+
+    toStream(
+        template: string,
+        options?: PDFOptions,
+        scheduler?: SchedulerLike,
+    ): Observable<Readable>;
+
+    toBuffer(
+        template: string,
+        options?: PDFOptions,
+        scheduler?: SchedulerLike,
+    ): Observable<Buffer>;
 }
 
 export { ViewEngineOptions, JuiceOptions };

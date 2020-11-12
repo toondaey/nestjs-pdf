@@ -1,18 +1,25 @@
 import { join } from 'path';
-import { PDFModule } from '../../src/pdf.module';
-import { Module, DynamicModule } from '@nestjs/common';
-import { PdfConfigService } from './pdf-config.service';
 
-@Module({})
+import { Module, DynamicModule } from '@nestjs/common';
+
+import { PDFModule } from '../../lib/pdf.module';
+import { ExistingModule } from './existing.module';
+import { PDFConfigService } from './pdf-config.service';
+
+const root = join(__dirname, '../assets/pdf');
+
+@Module({
+    exports: [PDFModule],
+})
 export class AppModule {
-    static withRegister(name?: string): DynamicModule {
+    static withRegister(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.register({
-                    name,
+                    isGlobal: true,
                     view: {
-                        root: join(__dirname, '../assets/pdf'),
+                        root,
                         engine: 'pug',
                     },
                 }),
@@ -20,32 +27,41 @@ export class AppModule {
         };
     }
 
-    static withUseFactoryRegisterAsync(name?: string): DynamicModule {
+    static withUseFactoryRegisterAsync(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.registerAsync({
                     useFactory: () => ({
-                        name,
                         view: {
-                            root: join(__dirname, '../assets/pdf'),
+                            root,
                             engine: 'pug',
                         },
                     }),
-                    inject: [],
                 }),
             ],
         };
     }
 
-    static withUseClassRegisterAsync(name?: string): DynamicModule {
+    static withUseClassRegisterAsync(): DynamicModule {
         return {
             module: AppModule,
             imports: [
                 PDFModule.registerAsync({
-                    name,
-                    useClass: PdfConfigService,
+                    useClass: PDFConfigService,
                     imports: [],
+                }),
+            ],
+        };
+    }
+
+    static withUseExistingRegisterAsync(): DynamicModule {
+        return {
+            module: AppModule,
+            imports: [
+                PDFModule.registerAsync({
+                    useExisting: PDFConfigService,
+                    imports: [ExistingModule],
                 }),
             ],
         };

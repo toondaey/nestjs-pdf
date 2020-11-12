@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-  <a href="" target="blank"><img src="pdf-icon.svg" width="120" alt="PDF Logo" /></a>
+  <a href="" target="blank"><img src="https://raw.githubusercontent.com/toondaey/nestjs-pdf/master/pdf-icon.svg" width="120" alt="PDF Logo" /></a>
 </p>
 
 <p style='text-align:center;'>
@@ -21,20 +21,23 @@ A simple PDF generator module for <a href="https://nestjs.com">nestjs</a> framew
 <summary><strong>Table of content</strong> (click to expand)</summary>
 
 <!-- toc -->
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-<!-- tocstop -->
-</details>
+
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Configuration](#configuration)
+-   [Guide](#usage)
+-   [Changelog](#changelog)
+-   [Contributing](#contributing)
+    <!-- tocstop -->
+    </details>
 
 ## Installation
 
-Installation is as simple as running:  
+Installation is as simple as running:
 
 `npm install nestjs-pdf`
 
-or  
+or
 
 `yarn add nestjs-pdf`.
 
@@ -45,9 +48,10 @@ A basic usage example:
 1. Register the module as a dependency in the module where pdf will be generated:
 
 `app.module.ts`
+
 ```ts
-import { Module } from '@nestjs/common';
 import { PDFModule } from 'nestjs-pdf';
+import { Module } from '@nestjs/common';
 
 @Module({
     imports: [
@@ -58,19 +62,20 @@ import { PDFModule } from 'nestjs-pdf';
                 engine: 'pug',
             },
         }),
-    ]
+    ],
 })
-export class AppModule { };
+export class AppModule {}
 ```
 
-The module could also be registered asynchronously using the `registerAsync` method. 
+The module could also be registered asynchronously using the `registerAsync` method.
 
 Examples below:
 
-- Using factory provider approach
+-   Using factory provider approach
+
 ```ts
 import { Module } from '@nestjs/common';
-import { PDFModule, PDFModuleOptions, } from 'nestjs-pdf';
+import { PDFModule, PDFModuleOptions } from 'nestjs-pdf';
 
 @Module({
     imports: [
@@ -81,14 +86,14 @@ import { PDFModule, PDFModuleOptions, } from 'nestjs-pdf';
                     root: '/path/to/template',
                     engine: 'pug',
                 },
-            })
+            }),
         }),
-    ]
+    ],
 })
-export class AppModule { };
+export class AppModule {}
 ```
 
-- Using class or existing provider approach:
+-   Using class or existing provider approach:
 
 `./pdf-config.service.ts`
 
@@ -112,19 +117,19 @@ export class PdfConfigService implements PDFOptionsFactory {
 The `PdfConfigService` **SHOULD** implement the `PDFOptionsFactory`, **MUST** declare the `createPdfOptions` method and **MUST** return `PDFModuleOptions` object.
 
 ```ts
+import { PDFModule } from 'nestjs-pdf';
 import { Module } from '@nestjs/common';
 import { PdfConfigService } from './pdf-config.service';
-import { PDFModule, PDFModuleOptions, } from 'nestjs-pdf';
 
 @Module({
     imports: [
         // ... other modules
         PDFModule.registerAsync({
-            useClass: PdfConfigService
+            useClass: PdfConfigService,
         }),
-    ]
+    ],
 })
-export class AppModule { };
+export class AppModule {}
 ```
 
 2. Inject into service as a dependency:
@@ -132,22 +137,43 @@ export class AppModule { };
 `app.service.ts`
 
 ```ts
-import { Injectable } from "@nestjs/common";
+import { PDFService } from 'nestjs-pdf';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
     constructor(
         // ...other dependencies...
-        @InjectPdf() pdf: PDF,
-    ) { }
-
-    async generatePdf() {
-        await this.pdf({
-            filename: './filename.pdf', // where pdf will be generated. Generally comprises of the path and filename
-            template: 'templateName',
-        }); // This will generate the pdf file at process.cwd() + './filename.pdf'.
-    }
+        private readonly pdfService: PDFService,
+    ) {}
 }
+```
+
+In addition to the above, in situations where all your pdf templates are grouped into a single directory but you expect pdf files to be generated in multiple contexts within your nestjs application, it is advisable to register the PDFModule once in the root module of your application and providing it globally. This can be done by setting `isGlobal` to true either in the `PDFModuleRegisterOptions` or `PDFModuleRegisterAsyncOptions` as below:
+
+```ts
+@Module({
+    imports: [
+        PDFModule.register({
+            isGlobal: true,
+            view: {
+                root: '/path/to/template',
+                engine: 'pug',
+            },
+        })
+        // or...
+        PDFModule.registerAsync({
+            isGlobal: true,
+            useFactory: (): PDFModuleOptions => ({
+                view: {
+                    root: '/path/to/template',
+                    engine: 'pug',
+                },
+            }),
+        }),
+    ]
+})
+export class RootModule {}
 ```
 
 ## Configuration
@@ -159,14 +185,11 @@ This library uses the [html-pdf](https://github.com/marcbachmann/node-html-pdf) 
 The configuration object received by the `register` method is as below:
 
 ```ts
-export interface PDFModuleOptions {
-    name?: string;
+export interface PDFModuleRegisterOptions {
     view: ViewOptions;
     juice?: JuiceOptions;
 }
 ```
-
-The `name` option would be the name of the module used for retrieval from the dependencies tree.
 
 The `ViewOptions` can be further broken down into:
 
@@ -180,48 +203,57 @@ export interface ViewOptions {
 ```
 
 where:
-- `root` (required) is the location of the template(s). This **MUST** be a directory.
-- `engine` (required) **MUST** be a string name of the engines supported by the `consolidate` engine parser listed [here](https://github.com/tj/consolidate.js#supported-template-engines).
-- `extension` (optional) **SHOULD** be provided where the file extension of the engine used is different from its name. e.g. a `swig` template would use `.html` as its file extension which is quite different from the engine name. Detailed example found [here](https://github.com/node-swig/swig-templates/tree/master/examples/basic)
-- `engineOptions` (optional) is a JavaScript object representation of the configuration options of engine used.
 
+-   `root` (required) is the location of the template(s). This **MUST** be a directory.
+-   `engine` (required) **MUST** be a string name of the engines supported by the `consolidate` engine parser listed [here](https://github.com/tj/consolidate.js#supported-template-engines).
+-   `extension` (optional) **SHOULD** be provided where the file extension of the engine used is different from its name. e.g. a `swig` template would use `.html` as its file extension which is quite different from the engine name. Detailed example found [here](https://github.com/node-swig/swig-templates/tree/master/examples/basic)
+-   `engineOptions` (optional) is a JavaScript object representation of the configuration options of engine used.
 
 The `JuiceOptions` is exactly the same as required in the `juice` package specifications [here](https://github.com/Automattic/juice#options).
 
-### PDF method options
+## Guide
 
-The options received by the pdf function is as below:
+After completing the configuration(s), you can go ahead and inject the `pdf` service into your class. The service provides three (3) methods (samples below) which can be used to either generate PDF:
+
+-   to a file on the host machine;
+-   as a stream (i.e. `Readable`); or
+-   as a `Buffer`.
 
 ```ts
-import { CreateOptions } from 'html-pdf';
+import { PDFService } from 'nestjs-pdf';
+import { Injectable } from '@nestjs/common';
 
-export interface PdfOptions extends CreateOptions {
-    filename?: string;
-    template: string;
-    viewportSize?: ViewPortSize;
-    locals?: {
-        [key: string]: any;
-    };
+@Injectable()
+export class YourService {
+    constructor(private readonly pdfService: PDFService);
+
+    generatePDFToFile(
+        template: string,
+        filename?: string,
+        options: PDFOptions,
+    ) {
+        this.pdf.toFile(template, filename, options); // returns Observable<FileInfo>;
+    }
+
+    generatePDFToStream(template: string, options?: PDFOptions) {
+        this.pdf.toStream(template, options); // returns Observable<Readable>;
+    }
+
+    generatePDFToBuffer(template: string, options?: PDFOptions) {
+        this.pdf.toBuffer(template, options); // returns Observable<Buffer>;
+    }
 }
 ```
 
-This is an extension of the `CreateOptions` as provided by the [@types/html-pdf](https://www.npmjs.com/package/@types/html-pdf).
+## Changelog
 
-The `filename` (optional) options **MUST** be a string. This should be the path to the pdf file (created when pdf is generated) to be generated. Where `filename` is not given the file will be generated at:
+### 2.0.0 / 2020-11-12
 
-```ts
-import { join } from "path";
-import { tmpdir } from "os";
-
-join(tmpdir(), `html-pdf-${process.pid}.pdf`);
-```
-
-The `template` (required) option is the name the directory housing the template `html`. This **MUST** be a directory (name) available in the `root` directory provided in the `ViewOptions`. The directory must provide a `html.<extension>` file. i.e. if using pug engine, the directory must provide a `html.pug` file.
-
-The `viewportSize` (optional) option is used to simulate the view of the screen when the pdf is grabbed. 
-
-The `locals` (optional) option is an object that provides variables accessible within the html template(s).
+-   Removes `pdf()` as the default service provided by the module.
+-   Provides an object of class `PDFService` as its default service.
+-   Removes registeration of module by name.
+-   PDFService provides three methods for either generating `toFile`, `toStream` or `toBuffer`.
 
 ## Contributing
 
-Contributions are welcome.
+Contributions are welcome. However, please read the contribution's [guide](./CONTRIBUTING.md).
