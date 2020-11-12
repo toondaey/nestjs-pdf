@@ -42,7 +42,9 @@ describe('PDFModule', () => {
                     next(file: FileInfo) {
                         expect(file.filename).toBe(filename);
                         // Tests that file was actually created.
-                        expect(() => rmFile(filename)).not.toThrowError();
+                        expect(() =>
+                            rmFile(filename),
+                        ).not.toThrowError();
                     },
                     complete,
                 });
@@ -72,21 +74,25 @@ describe('PDFModule', () => {
             it('should register module', async () => {
                 module = await Test.createTestingModule({
                     imports: [
-                        AppModule.withUseFactoryRegisterAsync(moduleName),
+                        AppModule.withUseFactoryRegisterAsync(),
                     ],
                 }).compile();
 
-                expect(module.get<PDFService>(PDFService)).toBeDefined();
+                expect(
+                    module.get<PDFService>(PDFService),
+                ).toBeDefined();
             });
         });
 
         describe('useClass()', () => {
             it('should register module', async () => {
                 module = await Test.createTestingModule({
-                    imports: [AppModule.withUseClassRegisterAsync(moduleName)],
+                    imports: [AppModule.withUseClassRegisterAsync()],
                 }).compile();
 
-                expect(module.get<PDFService>(PDFService)).toBeDefined();
+                expect(
+                    module.get<PDFService>(PDFService),
+                ).toBeDefined();
             });
         });
 
@@ -94,11 +100,13 @@ describe('PDFModule', () => {
             it('should register module', async () => {
                 module = await Test.createTestingModule({
                     imports: [
-                        AppModule.withUseExistingRegisterAsync(moduleName),
+                        AppModule.withUseExistingRegisterAsync(),
                     ],
                 }).compile();
 
-                expect(module.get<PDFService>(PDFService)).toBeDefined();
+                expect(
+                    module.get<PDFService>(PDFService),
+                ).toBeDefined();
             });
         });
     });
