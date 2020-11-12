@@ -12,8 +12,8 @@ A simple PDF generator module for <a href="https://nestjs.com">nestjs</a> framew
 <p align='center'>
     <a href="https://www.npmjs.com/package/nestjs-pdf" target='_blank'><img alt="npm" src="https://img.shields.io/npm/dm/nestjs-pdf" alt="NPM Downloads"></a>
     <a href="https://coveralls.io/github/toondaey/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="Coveralls github" src="https://img.shields.io/coveralls/github/toondaey/nestjs-pdf"></a>
-    <a href="https://npmjs.com/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="npm version" src="https://img.shields.io/npm/v/nestjs-pdf"></a>
-    <a href="https://npmjs.com/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="LICENCE" src="https://img.shields.io/npm/l/nestjs-pdf"></a>
+    <a href="https://npmjs.com/@t00nday/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="npm version" src="https://img.shields.io/npm/v/@t00nday/nestjs-pdf"></a>
+    <a href="https://npmjs.com/@t00nday/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="LICENCE" src="https://img.shields.io/npm/l/@t00nday/nestjs-pdf"></a>
     <a href="https://circleci.com/gh/toondaey/nestjs-pdf" target="_blank" rel="noopener noreferrer"><img alt="CircleCI build" src="https://img.shields.io/circleci/build/gh/toondaey/nestjs-pdf/master"></a>
 </p>
 
