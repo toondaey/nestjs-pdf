@@ -9,7 +9,6 @@ import {
     bindNodeCallback,
 } from 'rxjs';
 import juice from 'juice';
-/** @todo Try to remove moduleInterop */
 import omit from 'lodash.omit';
 import merge from 'lodash.merge';
 import consolidate from 'consolidate';
