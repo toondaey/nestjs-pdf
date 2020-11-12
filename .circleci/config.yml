@@ -6,49 +6,80 @@ orbs:
 aliases:
   - &restore-cache
     restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
+      key: dependency-cache-{{ checksum "package.json" }}
   - &install-deps
     run:
-        name: Install dependencies
-        command: npm ci
-  - &build-packages
+      name: Install dependencies
+      command: npm ci
+  - &update-npm
     run:
-        name: Build
-        command: npm run build
+      name: Update NPM version
+      command: 'sudo npm install -g npm@latest'
+  - &save-cache
+    save_cache:
+      key: dependency-cache-{{ checksum "package.json" }}
+      paths:
+        - ./node_modules
 
 jobs:
-  build:
+  integration_tests_node_10:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:10
     steps:
       - checkout
-      - run:
-          name: Update NPM version
-          command: 'sudo npm install -g npm@latest'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: npm ci
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Build
-          command: npm run build
-
-  integration_tests:
-    working_directory: ~/nest
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
+      - *update-npm
       - *restore-cache
       - *install-deps
+      - *save-cache
       - run:
-          name: Integration tests
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Unit test for node v10
+          command: npm run test:unit
+      - run:
+          name: Integration tests for node v10
+          command: npm run test:integration
+
+  integration_tests_node_12:
+    working_directory: ~/nest
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - *update-npm
+      - *restore-cache
+      - *install-deps
+      - *save-cache
+      - run:
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Unit test for node v12
+          command: npm run test:unit
+      - run:
+          name: Integration tests for node v12
+          command: npm run test:integration
+
+  integration_tests_node_14:
+    working_directory: ~/nest
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - *update-npm
+      - *restore-cache
+      - *install-deps
+      - *save-cache
+      - run:
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Unit test for node v14
+          command: npm run test:unit
+      - run:
+          name: Integration tests for node v14
           command: npm run test:integration
 
   coverage:
@@ -57,21 +88,23 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
+      - *update-npm
       - *restore-cache
       - *install-deps
+      - *save-cache
       - run:
           name: Test coverage
           command: npm run test:cov
-      - coveralls/upload
+      - coveralls/upload:
+          path_to_lcov: ./coverage/e2e/lcov.info
 
 workflows:
   version: 2
-  build-and-test:
+  test:
     jobs:
-      - build
-      - integration_tests:
-          requires:
-            - build
-      - coverage:
-          requires:
-            - build
+      - integration_tests_node_10
+      - integration_tests_node_12
+      - integration_tests_node_14
+  coverage:
+    jobs:
+      - coverage
