@@ -50,8 +50,8 @@ A basic usage example:
 `app.module.ts`
 
 ```ts
-import { PDFModule } from 'nestjs-pdf';
 import { Module } from '@nestjs/common';
+import { PDFModule } from '@t00nday/nestjs-pdf';
 
 @Module({
     imports: [
@@ -75,7 +75,7 @@ Examples below:
 
 ```ts
 import { Module } from '@nestjs/common';
-import { PDFModule, PDFModuleOptions } from 'nestjs-pdf';
+import { PDFModule, PDFModuleOptions } from '@t00nday/nestjs-pdf';
 
 @Module({
     imports: [
@@ -98,8 +98,11 @@ export class AppModule {}
 `./pdf-config.service.ts`
 
 ```ts
+import {
+    PDFModuleOptions,
+    PDFOptionsFactory,
+} from '@t00nday/nestjs-pdf';
 import { Injectable } from '@nestjs/common';
-import { PDFOptionsFactory, PDFModuleOptions } from 'nestjs-pdf';
 
 @Injectable()
 export class PdfConfigService implements PDFOptionsFactory {
@@ -117,8 +120,8 @@ export class PdfConfigService implements PDFOptionsFactory {
 The `PdfConfigService` **SHOULD** implement the `PDFOptionsFactory`, **MUST** declare the `createPdfOptions` method and **MUST** return `PDFModuleOptions` object.
 
 ```ts
-import { PDFModule } from 'nestjs-pdf';
 import { Module } from '@nestjs/common';
+import { PDFModule } from '@t00nday/nestjs-pdf';
 import { PdfConfigService } from './pdf-config.service';
 
 @Module({
@@ -137,8 +140,8 @@ export class AppModule {}
 `app.service.ts`
 
 ```ts
-import { PDFService } from 'nestjs-pdf';
 import { Injectable } from '@nestjs/common';
+import { PDFService } from '@t00nday/nestjs-pdf';
 
 @Injectable()
 export class AppService {
@@ -220,8 +223,8 @@ After completing the configuration(s), you can go ahead and inject the `pdf` ser
 -   as a `Buffer`.
 
 ```ts
-import { PDFService } from 'nestjs-pdf';
 import { Injectable } from '@nestjs/common';
+import { PDFService } from '@t00nday/nestjs-pdf';
 
 @Injectable()
 export class YourService {
@@ -246,6 +249,10 @@ export class YourService {
 ```
 
 ## Changelog
+
+### 2.0.4 / 2020-11-13
+
+-   docs(): correction of documentation
 
 ### 2.0.0 / 2020-11-12
 
