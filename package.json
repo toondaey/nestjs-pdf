@@ -31,7 +31,7 @@
     "release": "dotenv release-it --"
   },
   "dependencies": {
-    "consolidate": "0.15.1",
+    "consolidate": "0.16.0",
     "html-pdf": "2.2.0",
     "juice": "6.0.0",
     "lodash.merge": "4.6.2",
@@ -58,8 +58,8 @@
     "coveralls": "3.1.0",
     "dotenv-cli": "4.0.0",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.20.2",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-plugin-import": "2.22.1",
     "husky": "4.2.3",
     "jest": "25.5.2",
     "lint-staged": "10.2.1",
