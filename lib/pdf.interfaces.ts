@@ -78,7 +78,7 @@ export interface PDFModuleRegisterAsyncOptions
     useClass?: Type<PDFOptionsFactory>;
     useExisting?: Type<PDFOptionsFactory>;
     useFactory?: (...args: any[]) => PDFModuleOptions;
-    inject?: Pick<FactoryProvider, 'inject'>;
+    inject?: Extract<FactoryProvider, 'inject'>;
 }
 
 export interface ViewOptions {
