@@ -1,10 +1,13 @@
 import { Readable } from 'stream';
 
-import { CreateOptions, FileInfo } from 'html-pdf';
+import {
+    ModuleMetadata,
+    FactoryProvider,
+} from '@nestjs/common/interfaces';
+import { Type } from '@nestjs/common';
 import { Options as JuiceOptions } from 'juice';
-import { Type, Abstract } from '@nestjs/common';
-import { ModuleMetadata } from '@nestjs/common/interfaces';
 import { Observable, SchedulerLike } from 'rxjs';
+import { CreateOptions, FileInfo } from 'html-pdf';
 
 export type engine =
     | 'arc-templates'
@@ -75,9 +78,7 @@ export interface PDFModuleRegisterAsyncOptions
     useClass?: Type<PDFOptionsFactory>;
     useExisting?: Type<PDFOptionsFactory>;
     useFactory?: (...args: any[]) => PDFModuleOptions;
-    inject?: Array<
-        string | symbol | Function | Type<any> | Abstract<any>
-    >;
+    inject?: Pick<FactoryProvider, 'inject'>;
 }
 
 export interface ViewOptions {
