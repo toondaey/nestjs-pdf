@@ -38,9 +38,9 @@
     "lodash.omit": "4.5.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "8.3.5",
-    "@commitlint/config-conventional": "8.3.4",
-    "@commitlint/prompt-cli": "8.3.5",
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "@commitlint/prompt-cli": "11.0.0",
     "@compodoc/compodoc": "1.1.11",
     "@nestjs/common": "7.5.2",
     "@nestjs/core": "7.5.2",
