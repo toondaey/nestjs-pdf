@@ -1,8 +1,11 @@
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { existsSync } from 'fs';
-import { rmFile } from '../utils/fs.utlis';
+
+import { FileInfo } from 'html-pdf';
 import { INestApplication } from '@nestjs/common';
+
+import { rmFile } from '../utils/fs.utlis';
 import { getHtmlPdfOptionsToken, getPdfToken, PDF } from '../../src';
 
 export function testPdfOptionFn(app: INestApplication, name?: string) {
@@ -13,22 +16,24 @@ export function testPdfOptionFn(app: INestApplication, name?: string) {
 }
 
 export function testPdfFn(app: INestApplication, name?: string) {
-    const pdf = app.get(getPdfToken(name));
+    const pdf = app.get<PDF>(getPdfToken(name));
 
     expect(pdf).not.toBeNull();
     expect(pdf).not.toBeUndefined();
 }
 
-export async function testGenerateFn(app: INestApplication, name?: string) {
-    const pdf = app.get(getPdfToken(name)) as PDF;
-    const filename = join(tmpdir(), 'test.pdf');
+export function testGenerateFn(app: INestApplication, name?: string) {
+    const pdf = app.get<PDF>(getPdfToken(name));
+    const filename = join(__dirname, 'test.pdf');
 
     rmFile(filename);
 
-    await pdf({
-        filename,
+    pdf.toBuffer({
+        // filename,
         template: 'test',
+    }).subscribe({
+        next(file: Buffer) {
+            expect(Buffer.isBuffer(file)).toBe(true);
+        },
     });
-
-    expect(existsSync(filename)).toBeTruthy();
 }
