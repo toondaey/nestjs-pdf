@@ -250,7 +250,7 @@ export class YourService {
 
 ## Changelog
 
-### 2.0.5/ 2020-11-14
+### 2.0.5 / 2020-11-14
 
 -   chore(): dependencies updates
 
