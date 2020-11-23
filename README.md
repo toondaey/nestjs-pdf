@@ -35,11 +35,11 @@ A simple PDF generator module for <a href="https://nestjs.com">nestjs</a> framew
 
 Installation is as simple as running:
 
-`npm install nestjs-pdf`
+`npm install @t00nday/nestjs-pdf`
 
 or
 
-`yarn add nestjs-pdf`.
+`yarn add @t00nday/nestjs-pdf`.
 
 ## Usage
 
