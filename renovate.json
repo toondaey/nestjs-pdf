@@ -10,16 +10,16 @@
     },
     {
       "updateTypes": ["major"],
-      "labels": ["major-update"]
+      "labels": ["major-update", "dependencies"]
     },
     {
       "updateTypes": ["minor"],
-      "labels": ["minor-update"]
+      "labels": ["minor-update", "dependencies"]
     },
     {
       "updateTypes": ["patch"],
-      "labels": ["patch-update"]
+      "labels": ["patch-update", "dependencies"]
     }
   ],
-  "schedule": ["every weekday"]
+  "schedule": ["every weekday", "dependencies"]
 }
