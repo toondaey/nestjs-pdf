@@ -67,6 +67,7 @@
     "pug": "3.0.0",
     "reflect-metadata": "0.1.13",
     "release-it": "14.2.1",
+    "renovate": "23.84.13",
     "rimraf": "3.0.2",
     "rxjs": "6.6.3",
     "ts-jest": "26.4.4",
