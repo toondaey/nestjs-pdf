@@ -248,6 +248,57 @@ export class YourService {
 }
 ```
 
+## Download PDF from browser
+
+If you want to use the module to download a pdf from a browser you could use it like:
+
+```ts
+import { Controller, Get, Header, Res } from '@nestjs/common';
+import { YourService } from './your.service';
+
+@Controller('pdf')
+export class YourController {
+  constructor(private readonly yourSrv: YourService) {}
+  
+  @Get('/generate-pdf')
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'attachment; filename=my-file-name.pdf')
+  async generatePDF(@Res() res) {
+    const stream = await this.yourSrv.generatePDFToStream('folder-with-pdf', { locals: { name: 'Your name' }});
+    stream.pipe(res);
+  }
+}
+
+```
+
+where a file named `html.pug` should exist under `/path/to/template/folder-with-pdf` containining the template of your pdf [like this example](https://github.com/toondaey/nestjs-pdf/blob/master/test/assets/pdf/test/html.pug) and the method `generatePDFToStream` should look something like:
+
+```ts
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { PDFService } from '@t00nday/nestjs-pdf';
+import { Readable } from 'stream';
+
+// ... 
+
+@Injectable()
+export class YourService {
+  constructor(private readonly pdfService: PDFService) {}
+
+// ... 
+
+async generatePDFToStream(template: string, payload: any): Promise<Readable> {
+    try {
+      return await this.pdfService.toStream(template, payload).toPromise();
+    } catch (error) {
+      throw new InternalServerErrorException('Error while generating pdf', error);
+    }
+}
+
+// ... 
+```
+
+With all this done, to download your pdf just go to `http://localhost:3000/pdf/generate-pdf` (assuming your app is being served at port 3000)
+
 ## Changelog
 
 ### 2.0.6 / 2020-11-23
