@@ -224,7 +224,7 @@ After completing the configuration(s), you can go ahead and inject the `pdf` ser
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { PDFService } from '@t00nday/nestjs-pdf';
+import { PDFOptions, PDFService } from '@t00nday/nestjs-pdf';
 
 @Injectable()
 export class YourService {
@@ -233,17 +233,17 @@ export class YourService {
     generatePDFToFile(
         template: string,
         filename?: string,
-        options: PDFOptions,
+        options?: PDFOptions,
     ) {
-        this.pdf.toFile(template, filename, options); // returns Observable<FileInfo>;
+        this.PDFService.toFile(template, filename, options); // returns Observable<FileInfo>;
     }
 
     generatePDFToStream(template: string, options?: PDFOptions) {
-        this.pdf.toStream(template, options); // returns Observable<Readable>;
+        this.PDFService.toStream(template, options); // returns Observable<Readable>;
     }
 
     generatePDFToBuffer(template: string, options?: PDFOptions) {
-        this.pdf.toBuffer(template, options); // returns Observable<Buffer>;
+        this.PDFService.toBuffer(template, options); // returns Observable<Buffer>;
     }
 }
 ```
