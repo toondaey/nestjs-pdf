@@ -28,7 +28,6 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache

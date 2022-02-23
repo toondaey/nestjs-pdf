@@ -12,7 +12,6 @@ import { AppService } from '../src/app.service';
 
 describe('PDFModule', () => {
     let module: TestingModule;
-    let moduleName = 'test';
 
     describe('register()', () => {
         let filename: string;

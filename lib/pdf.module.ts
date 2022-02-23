@@ -1,8 +1,8 @@
 import {
     Type,
     Module,
-    Provider,
     DynamicModule,
+    Provider,
 } from '@nestjs/common';
 
 import {
@@ -73,9 +73,8 @@ export class PDFModule {
         }
 
         const inject = [
-            (options.useClass || options.useExisting) as Type<
-                PDFOptionsFactory
-            >,
+            (options.useClass ||
+                options.useExisting) as Type<PDFOptionsFactory>,
         ];
 
         return {
