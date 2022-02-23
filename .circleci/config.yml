@@ -10,7 +10,7 @@ aliases:
   - &install-deps
     run:
       name: Install dependencies
-      command: npm ci
+      command: npm install --force --unsafe-perm
   - &update-npm
     run:
       name: Update NPM version
