@@ -41,7 +41,10 @@ export class PDFService implements PDFInterface {
         return this.makeHtmlRender(template, options).pipe(
             mergeMap((html: string) => {
                 const create = this.create(html, options);
-                return bindNodeCallback<string | undefined, FileInfo>(
+                return bindNodeCallback<
+                    [string | undefined],
+                    [FileInfo]
+                >(
                     create.toFile.bind(create),
                     scheduler,
                 )(filename);
@@ -57,7 +60,7 @@ export class PDFService implements PDFInterface {
         return this.makeHtmlRender(template, options).pipe(
             mergeMap((html: string) => {
                 const create = this.create(html, options);
-                return bindNodeCallback<Readable>(
+                return bindNodeCallback<[], [Readable]>(
                     create.toStream.bind(create),
                     scheduler,
                 )();
@@ -73,7 +76,7 @@ export class PDFService implements PDFInterface {
         return this.makeHtmlRender(template, options).pipe(
             mergeMap((html: string) => {
                 const create = this.create(html, options);
-                return bindNodeCallback<Buffer>(
+                return bindNodeCallback<[], [Buffer]>(
                     create.toBuffer.bind(create),
                     scheduler,
                 )();
@@ -121,9 +124,8 @@ export class PDFService implements PDFInterface {
         locals?: Record<string, any>,
     ): Observable<string> {
         return bindNodeCallback<
-            string,
-            ViewOptions['engineOptions'] | undefined,
-            string
+            [string, ViewOptions['engineOptions'] | undefined],
+            [string]
         >(consolidate[engine], asapScheduler)(
             template,
             Object.assign({}, locals, engineOptions),

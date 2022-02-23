@@ -6,6 +6,8 @@ package-lock.json
 tslint.json
 tsconfig.json
 .prettierrc
+.dev-dependencies
+.dependencies
 
 # github
 .github
@@ -22,3 +24,4 @@ coverage
 .eslintrc
 commitlint.config.js
 pdf-icon.svg
+
