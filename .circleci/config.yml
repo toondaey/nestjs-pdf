@@ -32,6 +32,12 @@ jobs:
       - *install-deps
       - *save-cache
       - run:
+          name: Remove eslint locally
+          command: npm remove eslint
+      - run:
+          name: Install Eslint globally
+          command: npm install eslint -g
+      - run:
           name: Linting
           command: npm run lint
       - run:
