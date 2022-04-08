@@ -15,11 +15,23 @@ aliases:
     run:
       name: Update NPM version
       command: 'sudo npm install -g npm@latest'
+  - &run-lint
+    run:
+      name: Linting
+      command: npm run lint
+  - &run-integration
+    run:
+      name: Integration tests
+      command: npm run test:integration
   - &save-cache
     save_cache:
       key: dependency-cache-{{ checksum "package.json" }}
       paths:
         - ./node_modules
+  - &install-libfontconfig
+    run:
+      name: install libfontconfig
+      command: sudo apt-get install libfontconfig
 
 jobs:
   integration_tests_node_10:
@@ -28,32 +40,26 @@ jobs:
       - image: cimg/node:10.24
     steps:
       - checkout
+      - *install-libfontconfig
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v10
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
 
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:12.22
+      - image: cimg/node:12.16
     steps:
       - checkout
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v12
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
 
   integration_tests_node_14:
     working_directory: ~/nest
@@ -61,16 +67,13 @@ jobs:
       - image: cimg/node:14.19
     steps:
       - checkout
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v14
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
 
   integration_tests_node_16:
     working_directory: ~/nest
@@ -78,16 +81,13 @@ jobs:
       - image: cimg/node:16.14
     steps:
       - checkout
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v16
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
 
   coverage:
     working_directory: ~/nest
@@ -95,6 +95,7 @@ jobs:
       - image: cimg/node:16.14
     steps:
       - checkout
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
