@@ -25,7 +25,7 @@ jobs:
   integration_tests_node_10:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:10.24.1
+      - image: circlci/node:10.24
     steps:
       - checkout
       - *restore-cache
@@ -47,7 +47,7 @@ jobs:
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:12.22.12
+      - image: circleci/node:12.22
     steps:
       - checkout
       - *update-npm
@@ -64,7 +64,7 @@ jobs:
   integration_tests_node_14:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:14.19.1
+      - image: circleci/node:14.19
     steps:
       - checkout
       - *update-npm
@@ -81,7 +81,7 @@ jobs:
   integration_tests_node_16:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:16.14.2
+      - image: circleci/node:16.14
     steps:
       - checkout
       - *update-npm
@@ -98,7 +98,7 @@ jobs:
   coverage:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:12
+      - image: circleci/node:16.14
     steps:
       - checkout
       - *update-npm
