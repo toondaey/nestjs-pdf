@@ -5,6 +5,7 @@ index.ts
 package-lock.json
 tslint.json
 tsconfig.json
+tsconfig.build.json
 .prettierrc
 .dev-dependencies
 .dependencies
@@ -13,6 +14,8 @@ tsconfig.json
 .github
 CONTRIBUTING.md
 renovate.json
+.husky
+.lintstagedrc
 
 # ci
 .circleci

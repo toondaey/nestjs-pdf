@@ -34,7 +34,7 @@ export class PDFService implements PDFInterface {
 
     toFile(
         template: string,
-        filename?: string,
+        filename: string,
         options?: PDFOptions,
         scheduler: SchedulerLike = asapScheduler,
     ): Observable<FileInfo> {

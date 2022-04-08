@@ -232,8 +232,8 @@ export class YourService {
 
     generatePDFToFile(
         template: string,
-        filename?: string,
-        options: PDFOptions,
+        filename: string,
+        options?: PDFOptions,
     ) {
         this.pdf.toFile(template, filename, options); // returns Observable<FileInfo>;
     }
