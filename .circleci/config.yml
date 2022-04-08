@@ -25,18 +25,12 @@ jobs:
   integration_tests_node_10:
     working_directory: ~/nest
     docker:
-      - image: circlci/node:10.22
+      - image: cimg/node:10.24
     steps:
       - checkout
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Remove eslint locally
-          command: npm remove eslint
-      - run:
-          name: Install Eslint globally
-          command: npm install eslint -g
       - run:
           name: Linting
           command: npm run lint
@@ -47,7 +41,7 @@ jobs:
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:12.22
+      - image: cimg/node:12.22
     steps:
       - checkout
       - *update-npm
@@ -64,7 +58,7 @@ jobs:
   integration_tests_node_14:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:14.18
+      - image: cimg/node:14.19
     steps:
       - checkout
       - *update-npm
@@ -81,7 +75,7 @@ jobs:
   integration_tests_node_16:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:16.13
+      - image: cimg/node:16.14
     steps:
       - checkout
       - *update-npm
@@ -98,7 +92,7 @@ jobs:
   coverage:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:16.13
+      - image: cimg/node:16.14
     steps:
       - checkout
       - *update-npm
