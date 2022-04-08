@@ -25,7 +25,7 @@ jobs:
   integration_tests_node_10:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:10
+      - image: cimg/node:10.24.1
     steps:
       - checkout
       - *restore-cache
@@ -47,7 +47,7 @@ jobs:
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:12
+      - image: cimg/node:12.22.12
     steps:
       - checkout
       - *update-npm
@@ -64,7 +64,7 @@ jobs:
   integration_tests_node_14:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:14
+      - image: cimg/node:14.19.1
     steps:
       - checkout
       - *update-npm
@@ -81,7 +81,7 @@ jobs:
   integration_tests_node_16:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:16
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - *update-npm
