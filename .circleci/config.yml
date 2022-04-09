@@ -122,6 +122,7 @@ workflows:
       - integration_tests_node_10
       - integration_tests_node_12
       - integration_tests_node_14
+      - integration_tests_node_16
   coverage:
     jobs:
       - coverage

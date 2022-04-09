@@ -25,6 +25,6 @@ coverage
 .editorconfig
 .release-it.json
 .eslintrc
-commitlint.config.js
+.commitlintrc
 pdf-icon.svg
-
+.eslintignore
