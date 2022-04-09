@@ -28,10 +28,14 @@ aliases:
       key: dependency-cache-{{ checksum "package.json" }}
       paths:
         - ./node_modules
+  - &apt-update
+    run:
+      name: install libfontconfig
+      command: sudo apt-get update
   - &install-libfontconfig
     run:
       name: install libfontconfig
-      command: sudo apt-get install libfontconfig
+      command: sudo apt-get install -y libfontconfig
 
 jobs:
   integration_tests_node_10:
@@ -40,6 +44,7 @@ jobs:
       - image: cimg/node:10.24
     steps:
       - checkout
+      - *apt-update
       - *install-libfontconfig
       - *restore-cache
       - *install-deps
@@ -53,6 +58,7 @@ jobs:
       - image: cimg/node:12.16
     steps:
       - checkout
+      - *apt-update
       - *install-libfontconfig
       - *update-npm
       - *restore-cache
@@ -67,6 +73,7 @@ jobs:
       - image: cimg/node:14.19
     steps:
       - checkout
+      - *apt-update
       - *install-libfontconfig
       - *update-npm
       - *restore-cache
@@ -81,6 +88,7 @@ jobs:
       - image: cimg/node:16.14
     steps:
       - checkout
+      - *apt-update
       - *install-libfontconfig
       - *update-npm
       - *restore-cache
@@ -95,6 +103,7 @@ jobs:
       - image: cimg/node:16.14
     steps:
       - checkout
+      - *apt-update
       - *install-libfontconfig
       - *update-npm
       - *restore-cache
