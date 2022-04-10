@@ -15,14 +15,6 @@ aliases:
     run:
       name: Update NPM version
       command: 'sudo npm install -g npm@latest'
-  - &remove-eslint-locally
-    run:
-      name: Remove eslint locally
-      command: 'npm remove eslint'
-  - &install-eslint-globally
-    run:
-      name: Install eslint globally
-      command: 'sudo npm install -g eslint'
   - &run-lint
     run:
       name: Linting
@@ -46,22 +38,6 @@ aliases:
       command: sudo apt-get install -y libfontconfig
 
 jobs:
-  integration_tests_node_10:
-    working_directory: ~/nest
-    docker:
-      - image: cimg/node:10.24
-    steps:
-      - checkout
-      - *apt-update
-      - *install-libfontconfig
-      - *restore-cache
-      - *install-deps
-      - *remove-eslint-locally
-      - *install-eslint-globally
-      - *save-cache
-      - *run-lint
-      - *run-integration
-
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
@@ -73,8 +49,6 @@ jobs:
       - *update-npm
       - *restore-cache
       - *install-deps
-      - *remove-eslint-locally
-      - *install-eslint-globally
       - *save-cache
       - *run-lint
       - *run-integration
@@ -90,8 +64,6 @@ jobs:
       - *update-npm
       - *restore-cache
       - *install-deps
-      - *remove-eslint-locally
-      - *install-eslint-globally
       - *save-cache
       - *run-lint
       - *run-integration
@@ -124,8 +96,6 @@ jobs:
       - *update-npm
       - *restore-cache
       - *install-deps
-      - *remove-eslint-locally
-      - *install-eslint-globally
       - *save-cache
       - run:
           name: Test coverage
