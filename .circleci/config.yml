@@ -10,75 +10,87 @@ aliases:
   - &install-deps
     run:
       name: Install dependencies
-      command: npm ci
+      command: npm install --force --unsafe-perm
   - &update-npm
     run:
       name: Update NPM version
       command: 'sudo npm install -g npm@latest'
+  - &run-lint
+    run:
+      name: Linting
+      command: npm run lint
+  - &run-integration
+    run:
+      name: Integration tests
+      command: npm run test:integration
   - &save-cache
     save_cache:
       key: dependency-cache-{{ checksum "package.json" }}
       paths:
         - ./node_modules
+  - &apt-update
+    run:
+      name: install libfontconfig
+      command: sudo apt-get update
+  - &install-libfontconfig
+    run:
+      name: install libfontconfig
+      command: sudo apt-get install -y libfontconfig
 
 jobs:
-  integration_tests_node_10:
-    working_directory: ~/nest
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - *update-npm
-      - *restore-cache
-      - *install-deps
-      - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v10
-          command: npm run test:integration
-
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:12.22.0
     steps:
       - checkout
+      - *apt-update
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v12
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
 
   integration_tests_node_14:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.19
     steps:
       - checkout
+      - *apt-update
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
       - *save-cache
-      - run:
-          name: Linting
-          command: npm run lint
-      - run:
-          name: Integration tests for node v14
-          command: npm run test:integration
+      - *run-lint
+      - *run-integration
+
+  integration_tests_node_16:
+    working_directory: ~/nest
+    docker:
+      - image: cimg/node:16.14
+    steps:
+      - checkout
+      - *apt-update
+      - *install-libfontconfig
+      - *update-npm
+      - *restore-cache
+      - *install-deps
+      - *save-cache
+      - *run-lint
+      - *run-integration
 
   coverage:
     working_directory: ~/nest
     docker:
-      - image: circleci/node:12
+      - image: cimg/node:16.14
     steps:
       - checkout
+      - *apt-update
+      - *install-libfontconfig
       - *update-npm
       - *restore-cache
       - *install-deps
@@ -93,9 +105,9 @@ workflows:
   version: 2
   test:
     jobs:
-      - integration_tests_node_10
       - integration_tests_node_12
       - integration_tests_node_14
+      - integration_tests_node_16
   coverage:
     jobs:
       - coverage

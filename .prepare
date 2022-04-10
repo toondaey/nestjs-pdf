@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+## This checks if husky is installed in the npm modules
+## before setting it up. This is so no installation
+## fails in production.
+npm ls husky --depth 0 >> /dev/null
+
+if [ $? = 0 ]; then
+    husky install;
+fi;

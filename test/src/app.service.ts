@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FileInfo } from 'html-pdf';
-import { Observable } from 'rxjs';
+import { Observable, SchedulerLike } from 'rxjs';
 import { Readable } from 'stream';
 
 import { PDFOptions } from '../../lib';
@@ -11,10 +11,16 @@ export class AppService {
     constructor(private readonly pdfService: PDFService) {}
     generatePDFToFile(
         template: string,
-        filename?: string,
+        filename: string,
         options?: PDFOptions,
+        scheduler?: SchedulerLike,
     ): Observable<FileInfo> {
-        return this.pdfService.toFile(template, filename, options);
+        return this.pdfService.toFile(
+            template,
+            filename,
+            options,
+            scheduler,
+        );
     }
 
     generatePDFToStream(

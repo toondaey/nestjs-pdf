@@ -5,12 +5,17 @@ index.ts
 package-lock.json
 tslint.json
 tsconfig.json
+tsconfig.build.json
 .prettierrc
+.dev-dependencies
+.dependencies
 
 # github
 .github
 CONTRIBUTING.md
 renovate.json
+.husky
+.lintstagedrc
 
 # ci
 .circleci
@@ -20,5 +25,6 @@ coverage
 .editorconfig
 .release-it.json
 .eslintrc
-commitlint.config.js
+.commitlintrc
 pdf-icon.svg
+.eslintignore

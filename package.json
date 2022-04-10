@@ -3,6 +3,7 @@
   "version": "2.0.6",
   "description": "PDF generator for nestjs framework.",
   "main": "index.js",
+  "type": "module",
   "types": "index.d.ts",
   "author": "B'Tunde Aromire",
   "keywords": [
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "format": "prettier --write lib/**/*.ts README.md",
-    "build": "rimraf -rf dist && tsc -p tsconfig.json",
+    "build": "rimraf -rf dist && tsc -p tsconfig.build.json",
     "lint": "eslint lib/**/*.ts --fix",
     "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public",
@@ -26,52 +27,11 @@
     "publish:next": "npm publish --access public --tag next",
     "test": "npm run test:integration",
     "test:integration": "jest --config ./test/jest-e2e.json --runInBand",
+    "test:": "jest --config ./test/jest-e2e.json --runInBand",
     "test:cov": "jest --config ./test/jest-e2e.json --runInBand --coverage",
     "prerelease": "npm run build",
-    "release": "dotenv release-it --"
-  },
-  "dependencies": {
-    "consolidate": "^0.16.0",
-    "html-pdf": "^2.2.0",
-    "juice": "^7.0.0",
-    "lodash.merge": "^4.6.2",
-    "lodash.omit": "^4.5.0"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
-    "@commitlint/prompt-cli": "11.0.0",
-    "@compodoc/compodoc": "1.1.11",
-    "@nestjs/common": "7.6.18",
-    "@nestjs/core": "7.6.18",
-    "@nestjs/platform-express": "7.6.18",
-    "@nestjs/testing": "7.6.18",
-    "@types/consolidate": "0.14.0",
-    "@types/html-pdf": "2.2.0",
-    "@types/jest": "26.0.24",
-    "@types/lodash.merge": "4.6.6",
-    "@types/lodash.omit": "4.5.6",
-    "@types/node": "13.9.4",
-    "@types/rimraf": "3.0.0",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.33.0",
-    "coveralls": "3.1.0",
-    "dotenv-cli": "4.0.0",
-    "eslint": "7.32.0",
-    "eslint-config-prettier": "7.2.0",
-    "eslint-plugin-import": "2.22.1",
-    "husky": "4.3.8",
-    "jest": "26.6.3",
-    "lint-staged": "10.5.4",
-    "prettier": "2.2.1",
-    "pug": "3.0.0",
-    "reflect-metadata": "0.1.13",
-    "release-it": "14.11.6",
-    "renovate": "24.119.23",
-    "rimraf": "3.0.2",
-    "rxjs": "6.6.3",
-    "ts-jest": "26.5.6",
-    "typescript": "4.4.4"
+    "release": "dotenv release-it --",
+    "prepare": ".\\.prepare.bat || ./.prepare"
   },
   "repository": {
     "type": "git",
@@ -83,23 +43,64 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -c commitlintrc.config.js -E HUSKY_GIT_PARAMS",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "lib/**/*.ts": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^6.10.0 || ^7.0.0",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.0.0"
   },
   "homepage": "https://github.com/toondaey/nestjs-pdf#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "consolidate": "0.16.0",
+    "html-pdf": "3.0.1",
+    "juice": "8.0.0",
+    "lodash.merge": "4.6.2",
+    "lodash.omit": "4.5.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.10.0 || ^7.0.0 || ^8.0.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0 || ^7.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "16.2.3",
+    "@commitlint/config-conventional": "16.2.1",
+    "@commitlint/prompt-cli": "16.2.3",
+    "@compodoc/compodoc": "1.1.19",
+    "@nestjs/common": "8.4.4",
+    "@nestjs/core": "8.4.4",
+    "@nestjs/platform-express": "8.4.4",
+    "@nestjs/testing": "8.4.4",
+    "@types/consolidate": "0.14.1",
+    "@types/html-pdf": "3.0.0",
+    "@types/jest": "27.4.1",
+    "@types/lodash.merge": "4.6.6",
+    "@types/lodash.omit": "4.5.6",
+    "@types/node": "17.0.23",
+    "@types/rimraf": "3.0.2",
+    "@typescript-eslint/eslint-plugin": "5.18.0",
+    "@typescript-eslint/parser": "5.18.0",
+    "coveralls": "3.1.1",
+    "dotenv-cli": "5.1.0",
+    "eslint": "8.13.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "husky": "7.0.4",
+    "jest": "27.5.1",
+    "lint-staged": "12.3.7",
+    "prettier": "2.6.2",
+    "pug": "3.0.2",
+    "reflect-metadata": "0.1.13",
+    "release-it": "14.14.0",
+    "renovate": "32.17.0",
+    "rimraf": "3.0.2",
+    "rxjs": "7.5.5",
+    "ts-jest": "27.1.4",
+    "typescript": "4.6.3"
+  },
+  "engines": {
+    "node": ">=12.22.0",
+    "npm": ">=6.14.16"
   }
 }
