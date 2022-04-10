@@ -79,8 +79,6 @@ jobs:
       - *update-npm
       - *restore-cache
       - *install-deps
-      - *remove-eslint-locally
-      - *install-eslint-globally
       - *save-cache
       - *run-lint
       - *run-integration
