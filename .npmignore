@@ -9,6 +9,7 @@ tsconfig.build.json
 .prettierrc
 .dev-dependencies
 .dependencies
+.dccache
 
 # github
 .github
