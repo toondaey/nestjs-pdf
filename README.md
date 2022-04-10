@@ -235,15 +235,15 @@ export class YourService {
         filename: string,
         options?: PDFOptions,
     ) {
-        this.pdf.toFile(template, filename, options); // returns Observable<FileInfo>;
+        this.pdfService.toFile(template, filename, options); // returns Observable<FileInfo>;
     }
 
     generatePDFToStream(template: string, options?: PDFOptions) {
-        this.pdf.toStream(template, options); // returns Observable<Readable>;
+        this.pdfService.toStream(template, options); // returns Observable<Readable>;
     }
 
     generatePDFToBuffer(template: string, options?: PDFOptions) {
-        this.pdf.toBuffer(template, options); // returns Observable<Buffer>;
+        this.pdfService.toBuffer(template, options); // returns Observable<Buffer>;
     }
 }
 ```
