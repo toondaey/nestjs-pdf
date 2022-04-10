@@ -250,6 +250,10 @@ export class YourService {
 
 ## Changelog
 
+### 3.0.2 / 2022-04-10
+
+-   docs(): correct documentation
+
 ### 3.0.1 / 2022-04-10
 
 -   feat(): support for nestjs ^6.0.0 || ^7.0.0 || ^8.0.0
