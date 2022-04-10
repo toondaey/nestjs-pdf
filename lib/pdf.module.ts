@@ -39,7 +39,7 @@ export class PDFModule {
         return {
             global: options.isGlobal,
             module: PDFModule,
-            providers: [...this.createAsyncProviders(options)],
+            providers: [...PDFModule.createAsyncProviders(options)],
             imports: options.imports || [],
         };
     }
@@ -48,12 +48,12 @@ export class PDFModule {
         options: PDFModuleRegisterAsyncOptions,
     ): Provider[] {
         if (options.useFactory || options.useExisting) {
-            return [this.createAsyncOptionsProvider(options)];
+            return [PDFModule.createAsyncOptionsProvider(options)];
         }
 
         const useClass = options.useClass as Type<PDFOptionsFactory>;
         return [
-            this.createAsyncOptionsProvider(options),
+            PDFModule.createAsyncOptionsProvider(options),
             {
                 provide: useClass,
                 useClass,
@@ -73,9 +73,8 @@ export class PDFModule {
         }
 
         const inject = [
-            (options.useClass || options.useExisting) as Type<
-                PDFOptionsFactory
-            >,
+            (options.useClass ||
+                options.useExisting) as Type<PDFOptionsFactory>,
         ];
 
         return {

@@ -232,18 +232,18 @@ export class YourService {
 
     generatePDFToFile(
         template: string,
-        filename?: string,
-        options: PDFOptions,
+        filename: string,
+        options?: PDFOptions,
     ) {
-        this.pdf.toFile(template, filename, options); // returns Observable<FileInfo>;
+        this.pdfService.toFile(template, filename, options); // returns Observable<FileInfo>;
     }
 
     generatePDFToStream(template: string, options?: PDFOptions) {
-        this.pdf.toStream(template, options); // returns Observable<Readable>;
+        this.pdfService.toStream(template, options); // returns Observable<Readable>;
     }
 
     generatePDFToBuffer(template: string, options?: PDFOptions) {
-        this.pdf.toBuffer(template, options); // returns Observable<Buffer>;
+        this.pdfService.toBuffer(template, options); // returns Observable<Buffer>;
     }
 }
 ```
@@ -300,6 +300,14 @@ async generatePDFToStream(template: string, payload: any): Promise<Readable> {
 With all this done, to download your pdf just go to `http://localhost:3000/pdf/generate-pdf` (assuming your app is being served at port 3000)
 
 ## Changelog
+
+### 3.0.2 / 2022-04-10
+
+-   docs(): correct documentation
+
+### 3.0.1 / 2022-04-10
+
+-   feat(): support for nestjs ^6.0.0 || ^7.0.0 || ^8.0.0
 
 ### 2.0.6 / 2020-11-23
 
