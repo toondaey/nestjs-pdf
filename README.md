@@ -250,6 +250,10 @@ export class YourService {
 
 ## Changelog
 
+### 3.0.5 / 2022-04-11
+
+-   fix(): fix for failing jest tests
+
 ### 3.0.2 / 2022-04-10
 
 -   docs(): correct documentation
