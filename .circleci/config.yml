@@ -41,7 +41,7 @@ jobs:
   integration_tests_node_12:
     working_directory: ~/nest
     docker:
-      - image: cimg/node:12.22.0
+      - image: cimg/node:12.22.12
     steps:
       - checkout
       - *apt-update
