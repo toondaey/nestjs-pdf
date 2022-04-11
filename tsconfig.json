@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "declaration": true,
     "strict": true,
     "removeComments": true,
@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "es3",
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./lib",
