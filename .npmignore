@@ -10,6 +10,7 @@ tsconfig.build.json
 .dev-dependencies
 .dependencies
 .dccache
+.prepare*
 
 # github
 .github
