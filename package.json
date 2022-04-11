@@ -3,7 +3,6 @@
   "version": "3.0.2",
   "description": "PDF generator for nestjs framework.",
   "main": "index.js",
-  "type": "module",
   "types": "index.d.ts",
   "author": "B'Tunde Aromire",
   "keywords": [
