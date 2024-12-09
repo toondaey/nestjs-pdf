@@ -71,7 +71,7 @@
     "@nestjs/core": "8.4.4",
     "@nestjs/platform-express": "8.4.4",
     "@nestjs/testing": "8.4.4",
-    "@types/consolidate": "0.14.1",
+    "@types/consolidate": "0.14.4",
     "@types/html-pdf": "3.0.0",
     "@types/jest": "27.4.1",
     "@types/lodash.merge": "4.6.6",
